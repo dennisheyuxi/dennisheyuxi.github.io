@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Follow me on instagram! @from_taylors_kl</title>
+  </head>
+  <body>
+    <div id="dino"></div>
+    <div id="height1"></div>
+    <button onclick="rungame()">
+      <div id="gameover">Start game</div>
+      <div id="level">Level 1</div>
+    </button>
+    <button onclick="restart()" id="restartbutton">
+      Restart?
+      <div id="restart"></div>
+    </button>
+    <style>
+      button {
+        margin-left: 250px;
+        display: block;
+        color: rgba(255, 255, 255, 0.9);
+        border-radius: 5px;
+        background: linear-gradient(-45deg, #ffa63d, #ff3d77, #338aff, #3cf0c5);
+        background-size: 600%;
+        animation: gradientbutton 16s linear infinite;
+        border: 0;
+        width: 100px;
+        height: 35px;
+        text-align: center;
+        justify-content: space-evenly;
+      }
+      @keyframes gradientbutton {
+        0% {
+          background-position: 0%, 50%;
+        }
+        50% {
+          background-position: 100%, 50%;
+        }
+        100% {
+          background-position: 0%, 50%;
+        }
+      }
+      #dino {
+        width: 10px;
+        height: 50px;
+        background-color: black;
+        top: 70px;
+        left: 100px;
+        position: absolute;
+      }
+      #height1 {
+        width: 10px;
+        height: 20px;
+        left: 500px;
+        top: 100px;
+        position: absolute;
+        background-color: red;
+      }
+      html {
+        width: 0;
+        height: 0;
+      }
+    </style>
+    <script>
+      gameOver = false;
+      var dino = document.getElementById("dino");
+      dino.style.top = "70px";
+      dino.style.left = "100px";
+      var dinospeed = 12;
+      y = 1;
+      document.getElementById("restartbutton").style.display = "none";
+      document.getElementById("restart").style.display = "none";
+      var height1 = document.getElementById("height1");
+      height1.style.left = "500px";
+      height1.style.top = "100px";
+      function height1func() {
+        for (let i = 0; i <= 500; i++) {
+          setTimeout(function () {
+            height1.style.left = 500 - i + "px";
+            callbackheight1();
+            height1collide();
+          }, dinospeed * i);
+        }
+      }
+      function callbackheight1() {
+        if (height1.style.left == "0px") {
+          height1.style.left = "500px";
+          dinospeed = dinospeed -= 0.5;
+          y++;
+          document.getElementById("level").innerHTML = "Level" + " " + y;
+          rungame();
+        }
+      }
+      function height1collide() {
+        if (
+          dino.style.top == "70px" &&
+          (height1.style.left == "110px" || height1.style.left == "100px")
+        ) {
+          document.getElementById("restartbutton").style.display = "block";
+          document.getElementById("restart").style.display = "block";
+          gameOver = true;
+          document.getElementById("gameover").innerHTML = "Game over!";
+          document.getElementById("gameover").disabled = true;
+          setTimeout(function () {
+            if (gameOver == true) {
+              for (let i = 0; i <= 5; i++) {
+                setTimeout(function () {
+                  document.getElementById("restart").innerHTML = 5 - i;
+                  if (document.getElementById("restart").innerHTML == 0) {
+                    document.getElementById("restart").style.display = "none";
+                    gameOver = false;
+                  }
+                }, 1000 * i);
+              }
+            }
+          }, 2000);
+        }
+      }
+      function restart() {
+        location.reload();
+      }
+      function rungame() {
+        x = 1;
+        if (!gameOver) {
+          if (x == 1 && height1.style.left == "500px") {
+            height1func();
+            document.getElementById("gameover").disabled = false;
+          }
+        }
+      }
+      function dinojump() {
+        for (let i = 0; i <= 80; i++) {
+          if (i <= 40) {
+            setTimeout(function () {
+              dino.style.top = 70 - i + "px";
+            }, 6 * i);
+          } else if (i >= 40) {
+            setTimeout(function () {
+              dino.style.top = -10 + i + "px";
+            }, 8 * i);
+          }
+        }
+      }
+      let upArrowPressed = false;
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "ArrowUp" && !upArrowPressed) {
+          upArrowPressed = true;
+          dinojump();
+          setTimeout(function () {
+            upArrowPressed = false;
+          }, 750);
+        }
+      });
+    </script>
+  </body>
+  <!-- The most simple game, inspired by chrome://dino -->
+  <!-- Follow me at https://www.instagram.com/from_taylors_kl/ -->
+</html>
