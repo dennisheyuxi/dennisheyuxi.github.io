@@ -57,6 +57,7 @@
         top: 100px;
         position: absolute;
         background-color: red;
+        margin-right: 50px;
       }
       html {
         width: 0;
@@ -144,6 +145,15 @@
         }
       }
       let upArrowPressed = false;
+      document.addEventListener("touchstart", function (event) {
+        if (!upArrowPressed) {
+          upArrowPressed = true;
+          dinojump();
+          setTimeout(function () {
+            upArrowPressed = false;
+          }, 750);
+        }
+      });
       document.addEventListener("keydown", function (event) {
         if (event.key === "ArrowUp" && !upArrowPressed) {
           upArrowPressed = true;
